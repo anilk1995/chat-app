@@ -5,18 +5,21 @@ import SignInPage from "./pages/SignInPage";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import HomePage from "./pages/HomePage";
+import { ProfileProvider } from "./context/profile.context";
 
 function App() {
   return (
     <div>
-      <Switch>
-        <PublicRoute path="/signin">
-          <SignInPage />
-        </PublicRoute>
-        <PrivateRoute path="/">
-          <HomePage />
-        </PrivateRoute>
-      </Switch>
+      <ProfileProvider>
+        <Switch>
+          <PublicRoute path="/signin">
+            <SignInPage />
+          </PublicRoute>
+          <PrivateRoute path="/">
+            <HomePage />
+          </PrivateRoute>
+        </Switch>
+      </ProfileProvider>
     </div>
   );
 }
