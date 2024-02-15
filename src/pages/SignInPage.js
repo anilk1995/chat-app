@@ -1,7 +1,44 @@
-import { Button, Col, Container, Grid, IconButton, Panel, Row } from "rsuite";
-import GoogleCircleIcon from "@rsuite/icons/legacy/GooglePlusCircle";
+import {
+  Button,
+  Col,
+  Container,
+  Grid,
+  Panel,
+  Row,
+  Notification,
+  Message,
+} from "rsuite";
+import { auth, database } from "../misc/firebase";
+import firebase from "firebase/app";
 
 function SignInPage() {
+  const signINWithProvider = async (provider) => {
+    try {
+      const { additionalUserInfo, user } = await auth.signInWithPopup(provider);
+      console.log(user);
+      if (additionalUserInfo.isNewUser) {
+        await database.ref(`/profiles/${user.uid}`).set({
+          name: user.displayName,
+          createdAt: firebase.database.ServerValue.TIMESTAMP,
+        });
+      }
+
+      <Message closable type="info">
+        <strong>Info!</strong> Sign in successful info message.
+      </Message>;
+    } catch (error) {
+      <Message closable type="info">
+        <strong>Info!</strong> {error.message}
+      </Message>;
+    }
+  };
+  const onFaceBookSignIn = () => {
+    // signINWithProvider(new firebase.auth.FacebookAuthProvider());
+  };
+  const onGoogleSignIn = () => {
+    signINWithProvider(new firebase.auth.GoogleAuthProvider());
+  };
+
   return (
     <Container>
       <Grid className="mt-page">
@@ -13,10 +50,20 @@ function SignInPage() {
                 <p>Progressive Chat platform for nephotytes</p>
               </div>
               <div className="mt-3">
-                <Button appearance="primary" color="green" block>
+                <Button
+                  appearance="primary"
+                  color="green"
+                  block
+                  onClick={onGoogleSignIn}
+                >
                   Sign in from google
                 </Button>
-                <Button appearance="primary" color="blue" block>
+                <Button
+                  appearance="primary"
+                  color="blue"
+                  block
+                  onClick={onFaceBookSignIn}
+                >
                   Sign in from facebook
                 </Button>
               </div>
