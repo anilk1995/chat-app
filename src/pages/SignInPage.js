@@ -8,6 +8,9 @@ import {
   Notification,
   Message,
 } from "rsuite";
+import GoogleIcon from "@rsuite/icons/legacy/Google";
+import FacebookIcon from "@rsuite/icons/legacy/Facebook";
+
 import { auth, database } from "../misc/firebase";
 import firebase from "firebase/app";
 
@@ -56,7 +59,7 @@ function SignInPage() {
                   block
                   onClick={onGoogleSignIn}
                 >
-                  Sign in from google
+                  <GoogleIcon /> Sign in from google
                 </Button>
                 <Button
                   appearance="primary"
@@ -64,7 +67,7 @@ function SignInPage() {
                   block
                   onClick={onFaceBookSignIn}
                 >
-                  Sign in from facebook
+                  <FacebookIcon /> Sign in from facebook
                 </Button>
               </div>
             </Panel>
