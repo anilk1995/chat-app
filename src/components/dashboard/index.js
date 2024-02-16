@@ -1,19 +1,32 @@
-import { Button, Drawer } from "rsuite";
+import { Button, Divider, Drawer } from "rsuite";
 import { useProfile } from "../../context/profile.context";
+import EditableInput from "../EditableInput";
 
 function Dashboard({ onSignOut }) {
   const { profile } = useProfile();
+
+  const onSave = async (newData) => {};
+
   return (
     <>
-      <Drawer.Header>Dashboard</Drawer.Header>
+      <Drawer.Header>
+        <Drawer.Title>Dashboard</Drawer.Title>
+      </Drawer.Header>
       <Drawer.Body>
-        <div>
-          <h2>Hey, {profile.name}</h2>
-        </div>
+        <h3>Hey, {profile.name}</h3>
+        <Divider />
+        <EditableInput
+          name="nickname"
+          initialValue={profile.name}
+          onSave={onSave}
+          label={<h6 classname="mb-2">Nickname</h6>}
+        />
+      </Drawer.Body>
+      <Drawer.Footer>
         <Button block color="red" appearance="primary" onClick={onSignOut}>
           Sign out
         </Button>
-      </Drawer.Body>
+      </Drawer.Footer>
     </>
   );
 }

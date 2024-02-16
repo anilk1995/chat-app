@@ -1,4 +1,4 @@
-import { Button, Drawer } from "rsuite";
+import { Button, Drawer, Notification, toaster } from "rsuite";
 import DashboardIcon from "@rsuite/icons/legacy/Dashboard";
 import { useModalState } from "../../misc/custom-hooks";
 import Dashboard from ".";
@@ -13,6 +13,7 @@ function DashboardToggle() {
   const onSignOut = useCallback(() => {
     auth.signOut();
     close();
+    toaster.push(<Notification>Signed out</Notification>, { duration: 4000 });
   }, [close]);
 
   return (

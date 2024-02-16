@@ -7,6 +7,7 @@ import {
   Row,
   Notification,
   Message,
+  toaster,
 } from "rsuite";
 import GoogleIcon from "@rsuite/icons/legacy/Google";
 import FacebookIcon from "@rsuite/icons/legacy/Facebook";
@@ -26,9 +27,9 @@ function SignInPage() {
         });
       }
 
-      <Message closable type="info">
-        <strong>Info!</strong> Sign in successful info message.
-      </Message>;
+      toaster.push(<Notification type="success">Signed in</Notification>, {
+        duration: 4000,
+      });
     } catch (error) {
       <Message closable type="info">
         <strong>Info!</strong> {error.message}
