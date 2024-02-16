@@ -1,11 +1,27 @@
-import { Button, Divider, Drawer } from "rsuite";
+import { Button, Divider, Drawer, Notification, toaster } from "rsuite";
 import { useProfile } from "../../context/profile.context";
 import EditableInput from "../EditableInput";
+import { database } from "../../misc/firebase";
 
 function Dashboard({ onSignOut }) {
   const { profile } = useProfile();
 
-  const onSave = async (newData) => {};
+  const onSave = async (newData) => {
+    const userNickNameRef = database
+      .ref(`/profiles/${profile.uid}`)
+      .child("name");
+
+    try {
+      await userNickNameRef.set(newData);
+      toaster.push(<Notification>Nickname has been updated</Notification>, {
+        duration: 4000,
+      });
+    } catch (error) {
+      toaster.push(<Notification>{error.message}</Notification>, {
+        duration: 4000,
+      });
+    }
+  };
 
   return (
     <>
