@@ -1,18 +1,33 @@
 import { Button, Drawer } from "rsuite";
 import DashboardIcon from "@rsuite/icons/legacy/Dashboard";
-import { Icon } from "@rsuite/icons";
 import { useModalState } from "../../misc/custom-hooks";
 import Dashboard from ".";
+import { useMediaQuery } from "rsuite/esm/useMediaQuery/useMediaQuery";
+import React, { useCallback } from "react";
+import { auth } from "../../misc/firebase";
 
 function DashboardToggle() {
   const { isOpen, close, open } = useModalState();
+  const isMobile = useMediaQuery("(max-width: 992px)");
+
+  const onSignOut = useCallback(() => {
+    auth.signOut();
+    close();
+  }, [close]);
+
   return (
     <>
-      <Button block color="primary" onClick={open}>
+      <Button block appearance="primary" onClick={open}>
         <DashboardIcon /> Dashboard
       </Button>
-      <Drawer open={isOpen} onClose={close} placement="left">
-        <Dashboard />
+      <Drawer
+        open={isOpen}
+        onClose={close}
+        placement="left"
+        size="sm"
+        closeButton
+      >
+        <Dashboard onSignOut={onSignOut} />
       </Drawer>
     </>
   );
