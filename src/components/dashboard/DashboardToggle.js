@@ -13,7 +13,9 @@ function DashboardToggle() {
   const onSignOut = useCallback(() => {
     auth.signOut();
     close();
-    toaster.push(<Notification>Signed out</Notification>, { duration: 4000 });
+    toaster.push(<Notification type="warning">Signed out</Notification>, {
+      duration: 4000,
+    });
   }, [close]);
 
   return (
