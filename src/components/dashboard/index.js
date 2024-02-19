@@ -2,6 +2,8 @@ import { Button, Divider, Drawer, Notification, toaster } from "rsuite";
 import { useProfile } from "../../context/profile.context";
 import EditableInput from "../EditableInput";
 import { database } from "../../misc/firebase";
+import ProviderBlock from "./ProviderBlock";
+import AvatarUploadBtn from "./AvatarUploadBtn";
 
 function Dashboard({ onSignOut }) {
   const { profile } = useProfile();
@@ -29,20 +31,20 @@ function Dashboard({ onSignOut }) {
         <Drawer.Title>Dashboard</Drawer.Title>
       </Drawer.Header>
       <Drawer.Body>
+        <ProviderBlock />
         <h3>Hey, {profile.name}</h3>
         <Divider />
         <EditableInput
           name="nickname"
           initialValue={profile.name}
           onSave={onSave}
-          label={<h6 classname="mb-2">Nickname</h6>}
+          label={<h6 className="mb-2">Nickname</h6>}
         />
-      </Drawer.Body>
-      <Drawer.Footer>
+        <AvatarUploadBtn />
         <Button block color="red" appearance="primary" onClick={onSignOut}>
           Sign out
         </Button>
-      </Drawer.Footer>
+      </Drawer.Body>
     </>
   );
 }

@@ -9,9 +9,9 @@ import {
   Message,
   toaster,
 } from "rsuite";
+
 import GoogleIcon from "@rsuite/icons/legacy/Google";
 import FacebookIcon from "@rsuite/icons/legacy/Facebook";
-
 import { auth, database } from "../misc/firebase";
 import firebase from "firebase/app";
 
@@ -19,7 +19,6 @@ function SignInPage() {
   const signINWithProvider = async (provider) => {
     try {
       const { additionalUserInfo, user } = await auth.signInWithPopup(provider);
-      console.log(user);
       if (additionalUserInfo.isNewUser) {
         await database.ref(`/profiles/${user.uid}`).set({
           name: user.displayName,
@@ -36,9 +35,11 @@ function SignInPage() {
       </Message>;
     }
   };
+
   const onFaceBookSignIn = () => {
     // signINWithProvider(new firebase.auth.FacebookAuthProvider());
   };
+
   const onGoogleSignIn = () => {
     signINWithProvider(new firebase.auth.GoogleAuthProvider());
   };
