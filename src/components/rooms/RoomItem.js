@@ -5,6 +5,7 @@ function RoomItem({ room }) {
     <div>
       <div className="d-flex justify-content-between align-items-center">
         <h3 className="text-disappear">{name}</h3>
+
         <TimeAgo
           datetime={new Date(createdAt)}
           className="font-normal text-black-45"
