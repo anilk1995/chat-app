@@ -4,7 +4,7 @@ import "./styles/main.scss";
 import SignInPage from "./pages/SignInPage";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/home/HomePage";
 import { ProfileProvider } from "./context/profile.context";
 
 function App() {
