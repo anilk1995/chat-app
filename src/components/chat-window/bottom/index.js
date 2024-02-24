@@ -70,7 +70,6 @@ function Bottom() {
           placeholder="Write a new message here..."
           value={input}
           onChange={onInputChange}
-          onKeyDown={onKeyDown}
         />
         <InputGroup.Button
           appearance="primary"

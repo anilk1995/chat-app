@@ -4,17 +4,22 @@ import EditableInput from "../EditableInput";
 import { database } from "../../misc/firebase";
 import ProviderBlock from "./ProviderBlock";
 import AvatarUploadBtn from "./AvatarUploadBtn";
+import { getUserUpdates } from "../../misc/helper";
 
 function Dashboard({ onSignOut }) {
   const { profile } = useProfile();
 
   const onSave = async (newData) => {
-    const userNickNameRef = database
-      .ref(`/profiles/${profile.uid}`)
-      .child("name");
-
     try {
-      await userNickNameRef.set(newData);
+      const updates = await getUserUpdates(
+        profile.uid,
+        "name",
+        newData,
+        database
+      );
+
+      await database.ref().update(updates);
+
       toaster.push(<Notification>Nickname has been updated</Notification>, {
         duration: 4000,
       });
