@@ -9,11 +9,11 @@ function Messages() {
   const [messages, setMessages] = useState(null);
   const isChatEmpty = messages && messages.length === 0;
   const canShowMessages = messages && messages.length > 0;
-  console.log(messages);
+  console.log("messages: ", messages);
   useEffect(() => {
     const messagesRef = database.ref("/messages");
     messagesRef
-      .orderByChild("roomId")
+      .orderByChild("roomID")
       .equalTo(chatId)
       .on("value", (snap) => {
         const data = transformToArrWithId(snap.val());
