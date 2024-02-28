@@ -45,12 +45,13 @@ export const ProfileProvider = ({ children }) => {
         if (userStatusRef) {
           userStatusRef.off();
         }
+        database.ref(".info/connected").off();
         setProfile(null);
         setIsLoading(false);
       }
     });
     database.ref(".info/connected").on("value", (snapshot) => {
-      if (snapshot.val() === false) {
+      if (!!snapshot.val() === false) {
         return;
       }
 
@@ -63,6 +64,8 @@ export const ProfileProvider = ({ children }) => {
     });
 
     return () => {
+      database.ref(".info/connected").off();
+
       authUnsub();
       if (userRef) {
         userRef.off();

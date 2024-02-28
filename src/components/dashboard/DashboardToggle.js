@@ -21,7 +21,15 @@ function DashboardToggle() {
           duration: 4000,
         });
         close();
-      });
+      })
+      .catch((error) =>
+        toaster.push(
+          <Notification type="warning">{error.message}</Notification>,
+          {
+            duration: 4000,
+          }
+        )
+      );
   }, [close]);
 
   return (
