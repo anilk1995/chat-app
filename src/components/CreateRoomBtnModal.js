@@ -7,7 +7,7 @@ import FormControlLabel from "rsuite/esm/FormControlLabel";
 import FormControl from "rsuite/esm/FormControl";
 import { useRef, useState } from "react";
 import firebase from "firebase/app";
-import { database } from "../misc/firebase";
+import { auth, database } from "../misc/firebase";
 
 const INITIAL_FORM = {
   name: "",
@@ -33,9 +33,13 @@ function CreateRoomBtnModal() {
       return;
     } else {
       setIsLoading(true);
+
       const newRoomData = {
         ...formValue,
         createdAt: firebase.database.ServerValue.TIMESTAMP,
+        admins: {
+          [auth.currentUser.uid]: true,
+        },
       };
 
       try {
