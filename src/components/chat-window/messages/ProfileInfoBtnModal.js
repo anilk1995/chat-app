@@ -6,7 +6,7 @@ import ModalBody from "rsuite/esm/Modal/ModalBody";
 import ModalFooter from "rsuite/esm/Modal/ModalFooter";
 import ProfileAvatar from "../../ProfileAvatar";
 
-function ProfileInfoBtnModal({ profile, ...btnProps }) {
+function ProfileInfoBtnModal({ profile, children, ...btnProps }) {
   const { isOpen, open, close } = useModalState();
   const memberSince = new Date(profile.createdAt).toLocaleDateString();
 
@@ -31,6 +31,7 @@ function ProfileInfoBtnModal({ profile, ...btnProps }) {
           <p>Member siince {memberSince}</p>
         </ModalBody>
         <ModalFooter>
+          {children}
           <Button block onClick={close}>
             Close
           </Button>
