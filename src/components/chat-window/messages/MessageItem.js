@@ -2,14 +2,15 @@ import TimeAgo from "timeago-react";
 import ProfileAvatar from "../../ProfileAvatar";
 import ProfileInfoBtnModal from "./ProfileInfoBtnModal";
 import PresenceDot from "../../PresenceDot";
-import { Button } from "rsuite";
+import { Button, Tooltip, Whisper } from "rsuite";
 import { useCurrentRoom } from "../../../context/currentRoomContext";
 import { memo } from "react";
 import { auth } from "../../../misc/firebase";
 import { useHover } from "../../../misc/custom-hooks";
 import IconBtnControl from "./IconBtnControl";
+import CloseIcon from "@rsuite/icons/Close";
 
-function MessageItem({ message, handleAdmin, handleLike }) {
+function MessageItem({ message, handleAdmin, handleLike, handleDelete }) {
   const { author, createdAt, text, likes, likeCount } = message;
   const [selfRef, isHovered] = useHover();
 
@@ -63,6 +64,13 @@ function MessageItem({ message, handleAdmin, handleLike }) {
           onClick={() => handleLike(message.id)}
           badgeContent={likeCount}
         />
+        {isAuthor && (
+          <Whisper speaker={<Tooltip> Delete this message</Tooltip>}>
+            <span>
+              <CloseIcon onClick={() => handleDelete(message.id)} />
+            </span>
+          </Whisper>
+        )}
       </div>
       <div>
         <span className="word-breal-all">{text}</span>
