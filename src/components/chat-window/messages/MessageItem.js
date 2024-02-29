@@ -9,8 +9,8 @@ import { auth } from "../../../misc/firebase";
 import { useHover } from "../../../misc/custom-hooks";
 import IconBtnControl from "./IconBtnControl";
 
-function MessageItem({ message, handleAdmin }) {
-  const { author, createdAt, text } = message;
+function MessageItem({ message, handleAdmin, handleLike }) {
+  const { author, createdAt, text, likes, likeCount } = message;
   const [selfRef, isHovered] = useHover();
 
   const isAdmin = useCurrentRoom((v) => v.isAdmin);
@@ -18,7 +18,7 @@ function MessageItem({ message, handleAdmin }) {
   const isMsgAuthorAdmin = admins.includes(author.uid);
   const isAuthor = auth.currentUser.uid === author.uid;
   const canGrantAdmin = isAdmin && !isAuthor;
-
+  const isLiked = likes && Object.keys(likes).includes(auth.currentUser.uid);
   return (
     <li
       className={`padded mb-1 cursor-pointer ${isHovered ? "bg-black-02" : ""}`}
@@ -56,12 +56,12 @@ function MessageItem({ message, handleAdmin }) {
           className="font-normal text-black-45 ml-2"
         />
         <IconBtnControl
-          {...(true ? { color: "red" } : {})}
+          {...(isLiked ? { color: "red" } : {})}
           isVisible
           iconName="heart"
           tooltip="Like this message"
-          onClick={() => {}}
-          badgeContent={5}
+          onClick={() => handleLike(message.id)}
+          badgeContent={likeCount}
         />
       </div>
       <div>
