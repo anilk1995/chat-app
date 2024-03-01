@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { auth, database } from "../../../misc/firebase";
+import { auth, database, storage } from "../../../misc/firebase";
 import { transformToArrWithId } from "../../../misc/helper";
 import MessageItem from "./MessageItem";
 import { Notification, toaster } from "rsuite";
@@ -10,7 +10,7 @@ function Messages() {
   const [messages, setMessages] = useState(null);
   const isChatEmpty = messages && messages.length === 0;
   const canShowMessages = messages && messages.length > 0;
-  console.log("messages: ", messages);
+
   useEffect(() => {
     const messagesRef = database.ref("/messages");
     messagesRef
@@ -90,7 +90,7 @@ function Messages() {
   }, []);
 
   const handleDelete = useCallback(
-    async (msgId) => {
+    async (msgId, file) => {
       if (!window.confirm("Delete this message")) return;
 
       const isLast = messages[messages.length - 1].id === msgId;
@@ -110,7 +110,16 @@ function Messages() {
 
       try {
         await database.ref().update(updates);
-      } catch (error) {}
+      } catch (error) {
+        return;
+      }
+
+      if (file) {
+        const fileRef = await storage.refFromURL(file.url);
+        await fileRef.delete();
+        try {
+        } catch (error) {}
+      }
     },
     [chatId, messages]
   );

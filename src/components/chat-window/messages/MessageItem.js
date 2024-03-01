@@ -19,6 +19,15 @@ const renderFileMessage = (file) => {
       </div>
     );
   }
+
+  if (file.contentType.includes("audio")) {
+    return (
+      <audio controls>
+        <source src={file.url} type="audio/mp3" />
+        Browser does not support
+      </audio>
+    );
+  }
   return <a href={file.url}>Download {file.name}</a>;
 };
 
@@ -79,7 +88,7 @@ function MessageItem({ message, handleAdmin, handleLike, handleDelete }) {
         {isAuthor && (
           <Whisper speaker={<Tooltip> Delete this message</Tooltip>}>
             <span>
-              <CloseIcon onClick={() => handleDelete(message.id)} />
+              <CloseIcon onClick={() => handleDelete(message.id, file)} />
             </span>
           </Whisper>
         )}
